@@ -1,8 +1,8 @@
 module.exports = {
     'extends': [
-        'airbnb'
+        'airbnb',
     ],
-    'env' : {
+    'env': {
       'browser': true,
     },
     'parser': 'babel-eslint',

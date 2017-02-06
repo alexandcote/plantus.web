@@ -6,7 +6,6 @@ import './main.scss';
 
 import Base from './Base';
 
-// @jsx document
 ReactDOM.render(
   <Base />,
   document.getElementById('root'),

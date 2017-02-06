@@ -1,2 +1,3 @@
 [options]
 module.name_mapper='^\(.*\)\.s?css$' -> '<PROJECT_ROOT>/CSSModule.js.flow'
+module.name_mapper='^\(.*\)\.jpe?g$' -> '<PROJECT_ROOT>/WebpackAsset.js.flow'

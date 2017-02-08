@@ -4,20 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'bundle.js',
-    path: './public',
-  },
-  devtool: 'cheap-module-source-map',
-  devServer: {
-    contentBase: './public',
-    inline: true,
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        pathRewrite: { '^/api': '' }, // Path where the api is mounted
-      },
-    },
+    filename: 'bundle.min.js',
+    path: './dist',
   },
   module: {
     loaders: [
@@ -41,9 +29,14 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new webpack.optimize.UglifyJsPlugin({ minimize: true }),
     new HtmlWebpackPlugin({
-      template: '!!ejs-loader!index.ejs',
+      template: '!!ejs!index.ejs',
     }),
   ],
 };

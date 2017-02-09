@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Button, Panel } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-import { logIn, isAuthenticated } from './services/auth';
+import { logIn } from './services/auth';
 
 type Props = {
   router: {},
@@ -32,9 +32,18 @@ class Login extends React.Component {
     this.props.router.push('/');
   }
 
+  onError(error) {
+    if (error.body) {
+      error.json().then((json) => {
+        this.setState({ validationError: JSON.stringify(json, null, 4) });
+      });
+    }
+  }
+
   handleSubmit(event: Event) {
     logIn(this.state.email, this.state.password)
-    .then(this.onResponse.bind(this));
+    .then(this.onResponse.bind(this))
+    .catch(this.onError.bind(this));
     event.preventDefault();
   }
 
@@ -64,6 +73,11 @@ class Login extends React.Component {
           <FormControl value={this.state.password} id="password" type="password" placeholder="Password" onChange={this.handleChange} />
         </FormGroup>
         <Button type="submit">Submit</Button>
+        { !!this.state.validationError &&
+          <Panel header="Login error" bsStyle="danger">
+            { this.state.validationError }
+          </Panel>
+        }
       </form>
     );
   }

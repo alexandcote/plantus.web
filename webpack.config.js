@@ -1,6 +1,6 @@
+require('dotenv').config({ path: '.env.dev' });
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -13,6 +13,7 @@ module.exports = {
     contentBase: './public',
     inline: true,
     port: 3000,
+    historyApiFallback: true,
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
@@ -46,8 +47,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: '!!ejs-loader!index.ejs',
     }),
-    new Dotenv({
-      path: './.env.dev',
-    }),
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+      'API_PATH',
+    ]),
   ],
 };

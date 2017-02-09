@@ -11,13 +11,15 @@ export function getToken() {
 }
 
 export function logIn(email: string, password: string) {
-  PlantusAPI.auth(email, password).then((response) => {
-    response.json().then((data) => {
-      localStorage.setItem('token', data.token);
-      console.log(data.token);
+  return new Promise((resolve, reject) => {
+    PlantusAPI.auth(email, password).then((response) => {
+      response.json().then((data) => {
+        localStorage.setItem('token', data.token);
+        resolve();
+      });
+    }).catch((error) => {
+      reject(error);
     });
-  }).catch((error) => {
-    console.log(error);
   });
 }
 

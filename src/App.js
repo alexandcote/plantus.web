@@ -3,6 +3,8 @@ import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Base from './Base';
 import Login from './Login';
+import Dashboard from './Dashboard';
+import Logout from './Logout';
 
 class App extends React.Component {
   render() {
@@ -11,8 +13,10 @@ class App extends React.Component {
     }
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={Base}>
-          <IndexRoute component={Login} />
+        <Route path="/" component={Base} onEnter={Base.onEnter}>
+          <IndexRoute component={Dashboard} />
+          <Route path="login" component={Login} />
+          <Route path="logout" component={Logout} onEnter={Logout.onEnter} />
         </Route>
       </Router>
     );

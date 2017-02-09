@@ -1,21 +1,22 @@
+// @flow
 import React from 'react';
 import { FormGroup, FormControl, ControlLabel, Button, Panel } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import { logIn } from './services/auth';
 
 type Props = {
-  router: {},
+  router: { push: () => void },
 };
 
 class Login extends React.Component {
 
-  constructor(props: {}, context: {}) {
-    super(props, context);
+  constructor(props: Props) {
+    super(props);
     this.props = props;
-    this.context = context;
     this.state = {
       email: '',
       password: '',
+      validationError: null,
     };
 
     const self: any = this;
@@ -26,6 +27,7 @@ class Login extends React.Component {
   state: {
     email: string,
     password: string,
+    validationError: ?string,
   };
 
   onResponse() {
@@ -55,8 +57,6 @@ class Login extends React.Component {
     state[event.target.id] = event.target.value;
     this.setState(state);
   }
-
-  props: Props
 
   render() {
     if (!this.props) {

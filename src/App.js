@@ -3,7 +3,7 @@ import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Base from './Base';
 import Login from './Login';
-import Dashboard from './Dashboard';
+import Dashboard from './home/Dashboard';
 import Logout from './Logout';
 
 class App extends React.Component {

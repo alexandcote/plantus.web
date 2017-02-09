@@ -1,9 +1,9 @@
 // @flow
-
 import PlantusAPI from './plantus-api';
 
 export function isAuthenticated() {
-  return localStorage.getItem('token') !== '' && localStorage.getItem('token') !== undefined;
+  const token = localStorage.getItem('token');
+  return !(token === '' || token === null || token === undefined);
 }
 
 export function getToken() {

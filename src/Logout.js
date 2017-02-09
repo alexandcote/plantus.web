@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { Link } from 'react-router';
 import { logOut } from './services/auth';
 
 class Base extends React.Component {

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router';
+import { Grid } from 'react-bootstrap';
 import { isAuthenticated } from './services/auth';
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 class Base extends React.Component {
   static onEnter(nextState, replace, callback) {
     const path = nextState.location.pathname;
-    if (!isAuthenticated() && path !== '/login' && path !== '/logout') {
+    if (!isAuthenticated() && path !== '/login') {
       replace('/login');
     }
     callback();
@@ -31,10 +32,10 @@ class Base extends React.Component {
     }
 
     return (
-      <div className="container">
+      <Grid>
         { button }
         { this.props.children }
-      </div>
+      </Grid>
     );
   }
 }

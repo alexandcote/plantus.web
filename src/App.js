@@ -15,7 +15,7 @@ class App extends React.Component {
       <Router history={browserHistory}>
         <Route path="/" component={Base} onEnter={Base.onEnter}>
           <IndexRoute component={Dashboard} />
-          <Route path="login" component={Login} />
+          <Route path="login" component={Login} onEnter={Login.onEnter} />
           <Route path="logout" component={Logout} onEnter={Logout.onEnter} />
         </Route>
       </Router>

@@ -2,13 +2,20 @@
 import React from 'react';
 import { FormGroup, FormControl, ControlLabel, Button, Panel } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-import { logIn } from './services/auth';
+import { isAuthenticated, logIn } from './services/auth';
 
 type Props = {
   router: { push: () => void },
 };
 
 class Login extends React.Component {
+
+  static onEnter(nextState, replace, callback) {
+    if (isAuthenticated()) {
+      replace('/');
+    }
+    callback();
+  }
 
   constructor(props: Props) {
     super(props);
@@ -35,11 +42,9 @@ class Login extends React.Component {
   }
 
   onError(error) {
-    if (error.body) {
-      error.json().then((json) => {
-        this.setState({ validationError: JSON.stringify(json, null, 4) });
-      });
-    }
+    error.json().then((json) => {
+      this.setState({ validationError: JSON.stringify(json, null, 4) });
+    });
   }
 
   handleSubmit(event: Event) {

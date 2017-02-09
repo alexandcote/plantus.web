@@ -47,7 +47,7 @@ module.exports = {
       template: '!!ejs-loader!index.ejs',
     }),
     new Dotenv({
-      path: './env.dev',
+      path: './.env.dev',
     }),
   ],
 };

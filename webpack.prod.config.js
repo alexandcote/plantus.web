@@ -40,7 +40,7 @@ module.exports = {
       template: '!!ejs!index.ejs',
     }),
     new Dotenv({
-      path: './env.prod',
+      path: './.env.prod',
     }),
   ],
 };

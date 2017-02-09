@@ -6,7 +6,7 @@ export default class PlantusAPI {
   }
 
   static makeCall(path: string, method: 'POST'|'GET'|'PUT'|'DELETE'|'PATCH', params: ?{}, auth: bool) {
-    const fullpath = process.env.API_PATH + path;
+    const fullpath = `${process.env.API_PATH}${path}`;
     const config = {
       method,
       headers: {

@@ -46,6 +46,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: '!!ejs-loader!index.ejs',
     }),
-    new Dotenv(),
+    new Dotenv({
+      path: './env.dev',
+    }),
   ],
 };

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './main.scss';
 
-import Base from './Base';
+import App from './App';
 
 ReactDOM.render(
-  <Base />,
+  <App />,
   document.getElementById('root'),
 );

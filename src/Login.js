@@ -69,6 +69,7 @@ class Login extends React.Component {
     }
     return (
       <form onSubmit={this.handleSubmit}>
+        <h1>Login</h1>
         <FormGroup>
           <ControlLabel>Email address</ControlLabel>
           <FormControl value={this.state.email} id="email" type="email" placeholder="Email" onChange={this.handleChange} />

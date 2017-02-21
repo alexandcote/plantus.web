@@ -1,24 +1,47 @@
 // @flow
 import React from 'react';
 import { Link, withRouter } from 'react-router';
-import { Navbar, NavDropdown, Nav, NavItem, MenuItem } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { isAuthenticated } from './services/auth';
+import { logout } from './actions/auth';
+import * as Routes from './routes';
 
 type Props = {
+  logout: () => void,
+  auth: ?string,
 }
+type State = {}
 
 class Header extends React.Component {
 
+  constructor(props: Props) {
+    super(props);
+
+    const self: any = this;
+    self.handleSelect = this.handleSelect.bind(this);
+  }
+
+  state: State
   props: Props
+
+  handleSelect(key: number) {
+    if (key === 1) {
+      this.props.logout();
+    }
+  }
 
   render() {
     if (!this.props) {
       return null;
     }
-    let login = <NavItem eventKey={1}>Login</NavItem>;
-    if (isAuthenticated()) {
-      login = <NavItem eventKey={1}>Logout</NavItem>;
+    let loginNav = <NavItem eventKey={1}>Logout</NavItem>;
+    if (!this.props.auth) {
+      loginNav = (
+        <LinkContainer to={Routes.LOGIN()}>
+          <NavItem eventKey={1}>Login</NavItem>
+        </LinkContainer>
+      );
     }
 
     return (
@@ -30,25 +53,21 @@ class Header extends React.Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          { isAuthenticated() &&
+          { this.props.auth &&
             <Nav>
-              <LinkContainer to="/dashboard">
+              <LinkContainer to={Routes.HOME()}>
                 <NavItem eventKey={1}>Dashboard</NavItem>
               </LinkContainer>
-              <LinkContainer to="/plants">
+              <LinkContainer to={Routes.PLANTS()}>
                 <NavItem eventKey={2}>Plants</NavItem>
               </LinkContainer>
-              <LinkContainer to="/places">
+              <LinkContainer to={Routes.PLACES()}>
                 <NavItem eventKey={3}>Places</NavItem>
               </LinkContainer>
             </Nav>
           }
-          <Nav pullRight>
-            { !!login &&
-              <LinkContainer to={isAuthenticated() ? 'logout' : 'login'}>
-                {login}
-              </LinkContainer>
-            }
+          <Nav pullRight onSelect={this.handleSelect}>
+            { loginNav }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -56,4 +75,4 @@ class Header extends React.Component {
   }
 }
 
-export default withRouter(Header);
+export default connect(state => ({ auth: state.auth }), { logout })(withRouter(Header));

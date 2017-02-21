@@ -9,6 +9,7 @@ module.exports = {
     path: './dist',
   },
   module: {
+    noParse: /node_modules\/localforage\/dist\/localforage.js/,
     loaders: [
       {
         test: /.jsx?$/,

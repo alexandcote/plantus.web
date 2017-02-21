@@ -22,6 +22,7 @@ module.exports = {
     },
   },
   module: {
+    noParse: /node_modules\/localforage\/dist\/localforage.js/,
     loaders: [
       {
         test: /.jsx?$/,

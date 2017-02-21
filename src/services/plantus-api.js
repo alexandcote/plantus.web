@@ -1,11 +1,10 @@
-import { getToken } from './auth';
-
 export default class PlantusAPI {
   static auth(email: string, password: string) {
-    return PlantusAPI.makeCall('/auth/token/', 'POST', { email, password }, false);
+    return PlantusAPI.makeCall('/auth/token/', 'POST', { email, password }, false)
+      .then(response => response.token);
   }
 
-  static makeCall(path: string, method: 'POST'|'GET'|'PUT'|'DELETE'|'PATCH', params: ?{}, auth: bool) {
+  static async makeCall(path: string, method: 'POST'|'GET'|'PUT'|'DELETE'|'PATCH', params: ?{}/* , auth: bool*/) {
     const fullpath = process.env.API_PATH + path;
     const config = {
       method,
@@ -19,9 +18,9 @@ export default class PlantusAPI {
       config.body = JSON.stringify(params);
     }
 
-    if (auth) {
-      config.headers.Authorization = `JWT ${getToken()}`;
-    }
+    // if (auth) {
+    //   config.headers.Authorization = `JWT ${getToken()}`;
+    // }
 
     return fetch(fullpath, config).then((response) => {
       if (response.status >= 200 && response.status < 300) {

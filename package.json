@@ -9,6 +9,7 @@
     "ship": "webpack -p --config=webpack.prod.config.js --progress --colors && scp -r ./dist/ spare@138.197.137.254:/var/www/plantus.xyz"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-runtime": "^6.23.0",

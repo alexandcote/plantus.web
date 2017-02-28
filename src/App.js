@@ -14,7 +14,7 @@ type Props = {
 
 class App extends React.Component {
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     const self: any = this;
@@ -22,14 +22,14 @@ class App extends React.Component {
     self.requireAuth = this.requireAuth.bind(this);
   }
 
-  onLoginPage(nextState, replace, callback) {
+  onLoginPage(nextState: Object, replace: (string) => void, callback: () => void) {
     if (this.context.store.getState().auth) {
       replace(HOME());
     }
     callback();
   }
 
-  requireAuth(nextState, replace, callback) {
+  requireAuth(nextState: Object, replace: (string) => void, callback: () => void) {
     const path = nextState.location.pathname;
     if (!this.context.store.getState().auth && path !== LOGIN()) {
       replace(LOGIN());

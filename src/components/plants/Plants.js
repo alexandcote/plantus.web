@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { plantsRequest } from '../actions/plants';
-import type Plant from '../types/plant';
+import { plantsRequest } from '../../actions/plants';
+import type Plant from '../../types/plant';
 
 type Props = {
   plantsRequest: () => void,

@@ -12,7 +12,7 @@ import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
 import localForage from 'localforage';
 import './main.scss';
 
-import App from './App';
+import App from './components/App';
 
 
 import reducers from './reducers';

@@ -4,8 +4,8 @@ import { Link, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { logout } from './actions/auth';
-import * as Routes from './routes';
+import { logout } from '../actions/auth';
+import * as Routes from '../routes';
 
 type Props = {
   logout: () => void,

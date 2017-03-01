@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-import { loginRequest } from './actions/auth';
+import { loginRequest } from '../actions/auth';
 
 type Props = {
   loginRequest: (email: string, password: string) => void,

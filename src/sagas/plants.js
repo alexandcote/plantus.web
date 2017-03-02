@@ -6,7 +6,6 @@ import * as PlantsActions from '../actions/plants';
 function* getPlants() {
   try {
     const plants = yield call(api.getPlants);
-    console.log(plants);
     yield put(PlantsActions.plantsSuccess(plants));
   } catch (error) {
     yield put(PlantsActions.plantsError(error));

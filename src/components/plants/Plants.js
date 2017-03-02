@@ -1,7 +1,9 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { Row } from 'react-bootstrap';
 import { plantsRequest } from '../../actions/plants';
+import PlantCard from './PlantCard';
 import type Plant from '../../types/plant';
 
 type Props = {
@@ -24,7 +26,12 @@ class Plants extends React.Component {
     return (
       <div>
         <h1>Plants</h1>
-        { this.props.plants.map(plant => <p key={plant.id}>{plant.name}</p>) }
+        <Row>
+          { this.props.plants.map(plant => <PlantCard
+            key={plant.id}
+            plant={plant} />)
+          }
+        </Row>
       </div>
     );
   }

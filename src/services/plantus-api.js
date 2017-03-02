@@ -13,23 +13,28 @@ class PlantusAPI {
     const self: any = this;
     self.auth = this.auth.bind(this);
     self.getPlants = this.getPlants.bind(this);
+    self.getPlant = this.getPlant.bind(this);
   }
 
   auth(email: string, password: string) {
-    return this.makeCall('/auth/token/', 'POST', null, { email, password })
+    return this.makeCall('/auth/token/', 'POST', false, { email, password })
       .then(response => response.token);
   }
 
   getPlants() {
-    return this.makeCall('/plants/', 'GET', null, null, true)
+    return this.makeCall('/pots/', 'GET', true)
       .then(response => response.results);
+  }
+
+  getPlant(id: string) {
+    return this.makeCall(`/pots/${id}/`, 'GET', true);
   }
 
   setToken(token: string) {
     this.token = token;
   }
 
-  async makeCall(path: string, method: MethodType = 'GET', params: ?{} = null, data: ?{} = null, auth: bool = false) {
+  async makeCall(path: string, method: MethodType = 'GET', auth: bool = false, data: ?{} = null, params: ?{} = null) {
     const fullpath = this.apiPath + path;
 
     const headers = {};

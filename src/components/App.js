@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
-import { Router, Route } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 import Base from './Base';
 import Login from './Login';
 import Dashboard from './home/Dashboard';
 import Plants from './plants/Plants';
+import Plant from './plants/Plant';
 import Places from './places/Places';
 import { LOGIN, HOME } from '../routes';
 
@@ -47,7 +48,10 @@ class App extends React.Component {
       <Router history={this.props.history}>
         <Route path="/" component={Base} onEnter={this.requireAuth}>
           <Route path="dashboard" component={Dashboard} onEnter={this.requireAuth} />
-          <Route path="plants" component={Plants} onEnter={this.requireAuth} />
+          <Route path="plants" >
+            <IndexRoute component={Plants} onEnter={this.requireAuth} />
+            <Route path=":id" component={Plant} onEnter={this.requireAuth} />
+          </Route>
           <Route path="places" component={Places} onEnter={this.requireAuth} />
           <Route path="login" component={Login} onEnter={this.onLoginPage} />
         </Route>

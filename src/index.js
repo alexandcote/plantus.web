@@ -20,12 +20,6 @@ import sagas from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
-// const store: Store = composeWithDevTools(
-//   applyMiddleware(sagaMiddleware),
-//   applyMiddleware(routerMiddleware(history)),
-//   autoRehydrate(),
-// )(createStore)(reducers);
-
 const store = createStore(
   reducers,
   composeWithDevTools(

@@ -4,6 +4,8 @@ import authSaga from './auth';
 import logoutSaga from './logout';
 import plantsSaga from './plants';
 import plantSaga from './plant';
+import placesSaga from './places';
+import placeSaga from './place';
 
 export default function* root(): any {
   yield [
@@ -11,5 +13,7 @@ export default function* root(): any {
     fork(logoutSaga),
     fork(plantsSaga),
     fork(plantSaga),
+    fork(placesSaga),
+    fork(placeSaga),
   ];
 }

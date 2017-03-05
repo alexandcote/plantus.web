@@ -38,7 +38,7 @@ class Header extends React.Component {
     let loginNav = <NavItem eventKey={1}>Logout</NavItem>;
     if (!this.props.auth) {
       loginNav = (
-        <LinkContainer to={Routes.LOGIN()}>
+        <LinkContainer to={Routes.LoginRoute()}>
           <NavItem eventKey={1}>Login</NavItem>
         </LinkContainer>
       );
@@ -55,13 +55,13 @@ class Header extends React.Component {
         <Navbar.Collapse>
           { this.props.auth &&
             <Nav>
-              <LinkContainer to={Routes.HOME()}>
+              <LinkContainer to={Routes.HomeRoute()}>
                 <NavItem eventKey={1}>Dashboard</NavItem>
               </LinkContainer>
-              <LinkContainer to={Routes.PLANTS()}>
+              <LinkContainer to={Routes.PlantsRoute()}>
                 <NavItem eventKey={2}>Plants</NavItem>
               </LinkContainer>
-              <LinkContainer to={Routes.PLACES()}>
+              <LinkContainer to={Routes.PlacesRoute()}>
                 <NavItem eventKey={3}>Places</NavItem>
               </LinkContainer>
             </Nav>

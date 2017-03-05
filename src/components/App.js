@@ -7,7 +7,8 @@ import Dashboard from './home/Dashboard';
 import Plants from './plants/Plants';
 import Plant from './plants/Plant';
 import Places from './places/Places';
-import { LOGIN, HOME } from '../routes';
+import Place from './places/Place';
+import { LoginRoute, HomeRoute } from '../routes';
 
 type Props = {
   history: Object,
@@ -25,15 +26,15 @@ class App extends React.Component {
 
   onLoginPage(nextState: Object, replace: string => void, callback: () => void) {
     if (this.context.store.getState().auth) {
-      replace(HOME());
+      replace(HomeRoute());
     }
     callback();
   }
 
   requireAuth(nextState: Object, replace: string => void, callback: () => void) {
     const path = nextState.location.pathname;
-    if (!this.context.store.getState().auth && path !== LOGIN()) {
-      replace(LOGIN());
+    if (!this.context.store.getState().auth && path !== LoginRoute()) {
+      replace(LoginRoute());
     }
     callback();
   }
@@ -52,7 +53,10 @@ class App extends React.Component {
             <IndexRoute component={Plants} onEnter={this.requireAuth} />
             <Route path=":id" component={Plant} onEnter={this.requireAuth} />
           </Route>
-          <Route path="places" component={Places} onEnter={this.requireAuth} />
+          <Route path="places" >
+            <IndexRoute component={Places} onEnter={this.requireAuth} />
+            <Route path=":id" component={Place} onEnter={this.requireAuth} />
+          </Route>
           <Route path="login" component={Login} onEnter={this.onLoginPage} />
         </Route>
       </Router>

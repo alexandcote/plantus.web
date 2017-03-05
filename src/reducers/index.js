@@ -4,6 +4,8 @@ import { routerReducer } from 'react-router-redux';
 import auth from './auth';
 import plants from './plants';
 import plant from './plant';
+import places from './places';
+import place from './place';
 import { LOGOUT } from '../actions/auth';
 
 const plantusApp = combineReducers({
@@ -11,6 +13,8 @@ const plantusApp = combineReducers({
   auth,
   plants,
   plant,
+  places,
+  place,
 });
 
 export default (state: {routing: {}}, action: Object) => {

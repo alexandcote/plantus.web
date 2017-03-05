@@ -8,7 +8,6 @@ function* getPlant(id: string) {
     const plant = yield call(api.getPlant, id);
     yield put(PlantsActions.plantSuccess(plant));
   } catch (error) {
-    console.log(error);
     yield put(PlantsActions.plantError(error));
   }
 }

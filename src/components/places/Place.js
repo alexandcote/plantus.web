@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { placeRequest } from '../../actions/places';
+import { selectPlace } from '../../selectors';
 import type PlaceType from '../../types/place';
 
 type Props = {
@@ -28,4 +29,4 @@ class Place extends React.Component {
   }
 }
 
-export default connect(state => ({ place: state.place }), { placeRequest })(Place);
+export default connect(state => ({ place: selectPlace(state) }), { placeRequest })(Place);

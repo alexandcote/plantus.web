@@ -14,21 +14,21 @@ import './main.scss';
 
 import App from './components/App';
 
-
 import reducers from './reducers';
 import sagas from './sagas';
+import middlewares from './middlewares';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   reducers,
   composeWithDevTools(
-    applyMiddleware(sagaMiddleware, routerMiddleware(browserHistory)),
+    applyMiddleware(sagaMiddleware, routerMiddleware(browserHistory), ...middlewares),
     autoRehydrate(),
   ),
 );
 
-persistStore(store, { storage: localForage });
+persistStore(store, { storage: localForage, blacklist: 'auth' });
 sagaMiddleware.run(sagas);
 
 const history = syncHistoryWithStore(browserHistory, store);

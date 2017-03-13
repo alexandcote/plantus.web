@@ -42,6 +42,10 @@ module.exports = {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass'],
       },
+      {
+        test: /\.(png|jpe?g|gif)/,
+        loader: 'file',
+      },
     ],
   },
   plugins: [

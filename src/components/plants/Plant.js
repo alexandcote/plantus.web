@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { plantRequest } from '../../actions/plants';
+import { selectPlant } from '../../selectors';
 import type PlantType from '../../types/plant';
 
 type Props = {
@@ -28,4 +29,4 @@ class Plant extends React.Component {
   }
 }
 
-export default connect(state => ({ plant: state.plant }), { plantRequest })(Plant);
+export default connect(state => ({ plant: selectPlant(state) }), { plantRequest })(Plant);

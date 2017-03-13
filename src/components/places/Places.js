@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
 import { placesRequest } from '../../actions/places';
+import { selectPlaces } from '../../selectors';
 import Card from '../common/Card';
 import { PlaceRoute } from '../../routes';
 import type Place from '../../types/place';
@@ -44,4 +45,4 @@ class Places extends React.Component {
   }
 }
 
-export default connect(state => ({ places: state.places }), { placesRequest })(Places);
+export default connect(state => ({ places: selectPlaces(state) }), { placesRequest })(Places);

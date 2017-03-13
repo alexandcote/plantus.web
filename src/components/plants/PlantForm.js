@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormGroup, Button, ControlLabel, FormControl } from 'react-bootstrap';
 import update from 'immutability-helper';
 import { placesRequest } from '../../actions/places';
+import { selectPlaces } from '../../selectors';
 import type Plant from '../../types/plant';
 import type Place from '../../types/place';
 
@@ -85,4 +86,4 @@ class PlantForm extends React.Component {
   }
 }
 
-export default connect(state => ({ places: state.places }), { placesRequest })(PlantForm);
+export default connect(state => ({ places: selectPlaces(state) }), { placesRequest })(PlantForm);

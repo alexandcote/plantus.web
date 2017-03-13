@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../actions/auth';
+import { selectJWT } from '../selectors';
 import * as Routes from '../routes';
 
 type Props = {
   logout: () => void,
-  auth: ?string,
+  jwt: ?string,
 }
 type State = {}
 
@@ -36,7 +37,7 @@ class Header extends React.Component {
       return null;
     }
     let loginNav = <NavItem eventKey={1}>Logout</NavItem>;
-    if (!this.props.auth) {
+    if (!this.props.jwt) {
       loginNav = (
         <LinkContainer to={Routes.LoginRoute()}>
           <NavItem eventKey={1}>Login</NavItem>
@@ -53,7 +54,7 @@ class Header extends React.Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          { this.props.auth &&
+          { this.props.jwt &&
             <Nav>
               <LinkContainer to={Routes.HomeRoute()}>
                 <NavItem eventKey={1}>Dashboard</NavItem>
@@ -75,4 +76,4 @@ class Header extends React.Component {
   }
 }
 
-export default connect(state => ({ auth: state.auth }), { logout })(withRouter(Header));
+export default connect(state => ({ jwt: selectJWT(state) }), { logout })(withRouter(Header));

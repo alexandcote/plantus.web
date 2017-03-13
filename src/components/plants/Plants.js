@@ -47,6 +47,7 @@ class Plants extends React.Component {
 
   onSubmitNew(plant: Plant) {
     this.props.newPlantRequest(plant);
+    this.props.changePlantsModalVisibility(false);
   }
 
   showAdd() {

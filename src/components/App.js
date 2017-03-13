@@ -8,6 +8,7 @@ import Plants from './plants/Plants';
 import Plant from './plants/Plant';
 import Places from './places/Places';
 import Place from './places/Place';
+import { selectJWT, selectAuthReady } from '../selectors';
 import { LoginRoute, HomeRoute } from '../routes';
 
 type Props = {
@@ -25,7 +26,8 @@ class App extends React.Component {
   }
 
   onLoginPage(nextState: Object, replace: string => void, callback: () => void) {
-    if (this.context.store.getState().auth) {
+    const jwt = selectJWT(this.context.store.getState());
+    if (jwt) {
       replace(HomeRoute());
     }
     callback();
@@ -33,7 +35,9 @@ class App extends React.Component {
 
   requireAuth(nextState: Object, replace: string => void, callback: () => void) {
     const path = nextState.location.pathname;
-    if (!this.context.store.getState().auth && path !== LoginRoute()) {
+    const jwt = selectJWT(this.context.store.getState());
+    const authReady = selectAuthReady(this.context.store.getState());
+    if (!jwt && path !== LoginRoute() && authReady) {
       replace(LoginRoute());
     }
     callback();

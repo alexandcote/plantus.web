@@ -1,13 +1,12 @@
 // @flow
-import { REHYDRATE } from 'redux-persist/constants';
-import { call, put, take, fork } from 'redux-saga/effects';
+import { call, put, take } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import http from '../services/plantus-http';
 import api from '../services/plantus-api';
 import { HomeRoute } from '../routes';
 import * as AuthActions from '../actions/auth';
 
-function* login() {
+function* authSaga(): * {
   while (true) {
     const action = yield take(AuthActions.LOGIN_REQUEST);
     try {
@@ -19,20 +18,6 @@ function* login() {
       yield put(AuthActions.loginError(error));
     }
   }
-}
-
-function* rehydrate() {
-  while (true) {
-    const action = yield take(REHYDRATE);
-    yield http.setToken(action.payload.auth);
-  }
-}
-
-function* authSaga(): * {
-  yield [
-    fork(login),
-    fork(rehydrate),
-  ];
 }
 
 export default authSaga;

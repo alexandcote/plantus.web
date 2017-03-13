@@ -14,5 +14,6 @@ module.exports = {
         'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx'] }],
         'react/jsx-closing-bracket-location': [1, { selfClosing: 'after-props', nonEmpty: 'tag-aligned' }],
         'react/require-default-props': 0,
+        'no-constant-condition': 0,
     }
 };

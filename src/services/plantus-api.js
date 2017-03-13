@@ -1,5 +1,6 @@
 // @flow
 import http from './plantus-http';
+import Plant from '../types/plant';
 
 class PlantusAPI {
   static auth(email: string, password: string) {
@@ -14,6 +15,10 @@ class PlantusAPI {
 
   static getPlant(id: string) {
     return http.fetch(`/pots/${id}/`, 'GET', true);
+  }
+
+  static newPlant(plant: Plant) {
+    return http.fetch('/pots/', 'POST', true, plant);
   }
 
   static getPlaces() {

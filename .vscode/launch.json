@@ -1,0 +1,17 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Attach",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "sourceMaps": true,
+            "url": "localhost:3000/*",
+            "webRoot": "${workspaceRoot}/public",
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${workspaceRoot}/*"
+            }
+        }
+    ]
+}

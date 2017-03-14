@@ -38,9 +38,9 @@ class Login extends React.Component {
     if (!(event.target instanceof HTMLInputElement)) {
       throw new Error('Element is not an input');
     }
-    const state = {};
-    state[event.target.id] = event.target.value;
-    this.setState(state);
+    this.setState({
+      [event.target.id]: event.target.value,
+    });
   }
 
   render() {

@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server -d --progress --colors",
     "build": "webpack -p --config=webpack.prod.config.js --progress --colors",
-    "ship": "webpack -p --config=webpack.prod.config.js --progress --colors && scp -r ./dist/ spare@138.197.137.254:/var/www/plantus.xyz"
+    "ship": "webpack -p --config=webpack.prod.config.js --progress --colors && scp -r ./dist/ spare@138.197.137.254:/var/www/plantus.xyz",
+    "serve": "node static-web-server.js",
+    "build:serve": "yarn build && yarn serve"
   },
   "dependencies": {
     "axios": "^0.15.3",

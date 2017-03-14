@@ -28,7 +28,7 @@ const store = createStore(
   ),
 );
 
-persistStore(store, { storage: localForage, blacklist: 'auth' });
+persistStore(store, { storage: localForage, blacklist: ['auth'] });
 sagaMiddleware.run(sagas);
 
 const history = syncHistoryWithStore(browserHistory, store);

@@ -9,7 +9,7 @@ const ApiAuthMiddleware = ({ getState }) => next => (action) => {
   if (oldToken !== newToken) {
     http.setToken(newToken);
     if (newToken) {
-      setTimeout(() => next(authReady()), 250);
+      next(authReady());
     }
   }
   return result;

@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import spinnerGIF from './spinner.svg';
 
 class Spinner extends React.Component {
 
@@ -10,9 +9,7 @@ class Spinner extends React.Component {
     }
 
     return (
-      <div style={{ height: '100%' }}>
-        <img src={spinnerGIF} alt="spinner" className="spinner" />
-      </div>
+      <div style={{ height: '100%' }} />
     );
   }
 }

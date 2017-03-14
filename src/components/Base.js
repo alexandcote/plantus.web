@@ -1,17 +1,9 @@
 // @flow
 import React from 'react';
 import { Grid } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import Header from './Header';
-import Spinner from './Spinner';
-import { selectAuthReady } from '../selectors';
 
 type Props = {
-  authReady: boolean,
-  location: {
-    pathname: string,
-  },
   children: [],
 };
 
@@ -25,25 +17,13 @@ class Base extends React.Component {
 
     return (
       <div>
-        { !this.props.authReady && this.props.location.pathname !== '/login' &&
-          <Spinner />
-        }
-        { (this.props.authReady || this.props.location.pathname === '/login') &&
-          (
-            <div>
-              <Header />
-              <Grid>
-                { this.props.children }
-              </Grid>
-            </div>
-          )
-        }
+        <Header />
+        <Grid>
+          { this.props.children }
+        </Grid>
       </div>
     );
   }
 }
 
-export default connect(state => ({
-  authReady: selectAuthReady(state),
-}),
-)(withRouter(Base));
+export default Base;

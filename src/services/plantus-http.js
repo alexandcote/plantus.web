@@ -15,7 +15,7 @@ class PlantusHTTP {
     this.token = token;
   }
 
-  async fetch(path: string, method: MethodType = 'GET', auth: bool = false, data: ?{} = null, params: ?{} = null) {
+  async fetch(path: string, method: MethodType = 'GET', auth: bool = true, data: ?{} = null, params: ?{} = null) {
     const fullpath = this.apiPath + path;
 
     const headers = {};

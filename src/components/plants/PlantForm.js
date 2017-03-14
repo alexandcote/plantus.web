@@ -56,7 +56,7 @@ class PlantForm extends React.Component {
         <FormGroup>
           <ControlLabel>Name</ControlLabel>
           <FormControl
-            value={this.state.plant.name} id="name" type="name" placeholder="Name"
+            value={this.state.plant.name} id="name" name="name" type="text" placeholder="Name"
             onChange={(event) => {
               this.setState(
                 update(this.state, { plant: { name: { $set: event.target.value } } }),
@@ -64,9 +64,9 @@ class PlantForm extends React.Component {
             }} />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Name</ControlLabel>
+          <ControlLabel>Place</ControlLabel>
           <FormControl
-            id="place" type="place" componentClass="select"
+            id="place" name="place" componentClass="select"
             onChange={(event) => {
               this.setState(
                 update(this.state, { plant: { place: { $set: event.target.value } } }),
@@ -76,8 +76,6 @@ class PlantForm extends React.Component {
             {this.props.places.map(place => (
               <option key={place.id} value={place.id}>{place.name}</option>
             ))}
-            <option value={1}>Place 1</option>
-            <option value={2}>Place 2</option>
           </FormControl>
         </FormGroup>
         <Button type="submit">Submit</Button>

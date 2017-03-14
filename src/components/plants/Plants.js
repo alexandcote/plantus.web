@@ -8,6 +8,7 @@ import PlantInfo from './PlantInfo';
 import FormModal from '../common/FormModal';
 import PlantForm from './PlantForm';
 import { PlantRoute } from '../../routes';
+import { selectPlantsModalVisibility, selectPlants } from '../../selectors';
 import type Plant from '../../types/plant';
 
 type Props = {
@@ -64,6 +65,11 @@ class Plants extends React.Component {
     if (!this.props) {
       return null;
     }
+    const modal = this.props.show ? (
+      <FormModal show={this.props.show} title="Add Place" onClose={this.hideAdd}>
+        <PlantForm onSubmit={this.onSubmitNew} />
+      </FormModal>
+    ) : null;
     return (
       <div>
         <h1>Plants
@@ -72,9 +78,7 @@ class Plants extends React.Component {
         <Row>
           { this.props.plants.map(plantCard) }
         </Row>
-        <FormModal show={this.props.show} title="Add Plant" onClose={this.hideAdd}>
-          <PlantForm onSubmit={this.onSubmitNew} />
-        </FormModal>
+        {modal}
       </div>
     );
   }
@@ -82,8 +86,8 @@ class Plants extends React.Component {
 
 export default connect(
   state => ({
-    plants: state.plants.list,
-    show: state.plants.modalVisibility,
+    plants: selectPlants(state),
+    show: selectPlantsModalVisibility(state),
   }),
   {
     plantsRequest,

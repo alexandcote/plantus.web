@@ -1,6 +1,8 @@
 // @flow
+import humps from 'humps';
 import http from './plantus-http';
 import Plant from '../types/plant';
+import Place from '../types/place';
 
 class PlantusAPI {
   static auth(email: string, password: string) {
@@ -9,25 +11,34 @@ class PlantusAPI {
   }
 
   static getPlants() {
-    return http.fetch('/pots/', 'GET', true)
-      .then(response => response.results);
+    return http.fetch('/pots/')
+      .then(response => humps.camelizeKeys(response.results));
   }
 
   static getPlant(id: string) {
-    return http.fetch(`/pots/${id}/`, 'GET', true);
+    return http.fetch(`/pots/${id}/`);
   }
 
   static newPlant(plant: Plant) {
-    return http.fetch('/pots/', 'POST', true, plant);
+    return http.fetch('/pots/', 'POST', true, humps.decamelizeKeys(plant));
   }
 
   static getPlaces() {
-    return http.fetch('/places/', 'GET', true)
-      .then(response => response.results);
+    return http.fetch('/places/')
+      .then(response => humps.camelizeKeys(response.results));
   }
 
   static getPlace(id: string) {
-    return http.fetch(`/places/${id}/`, 'GET', true);
+    return http.fetch(`/places/${id}/`);
+  }
+
+  static newPlace(place: Place) {
+    return http.fetch('/places/', 'POST', true, humps.decamelizeKeys(place));
+  }
+
+  static getUsers() {
+    return http.fetch('/users/')
+      .then(response => humps.camelizeKeys(response.results));
   }
 }
 

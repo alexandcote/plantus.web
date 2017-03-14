@@ -1,18 +1,13 @@
 // @flow
 import React from 'react';
-import { Router, Route, IndexRoute } from 'react-router';
-import Base from './Base';
-import Login from './Login';
-import Dashboard from './home/Dashboard';
-import Plants from './plants/Plants';
-import Plant from './plants/Plant';
-import Places from './places/Places';
-import Place from './places/Place';
+import { connect } from 'react-redux';
+import Routes from './Routes';
 import { selectJWT, selectAuthReady } from '../selectors';
 import { LoginRoute, HomeRoute } from '../routes';
 
 type Props = {
   history: Object,
+  authReady: ?boolean,
 }
 
 class App extends React.Component {
@@ -36,8 +31,7 @@ class App extends React.Component {
   requireAuth(nextState: Object, replace: string => void, callback: () => void) {
     const path = nextState.location.pathname;
     const jwt = selectJWT(this.context.store.getState());
-    const authReady = selectAuthReady(this.context.store.getState());
-    if (!jwt && path !== LoginRoute() && authReady) {
+    if (!jwt && path !== LoginRoute()) {
       replace(LoginRoute());
     }
     callback();
@@ -49,22 +43,12 @@ class App extends React.Component {
     if (!this.props) {
       return null;
     }
-    return (
-      <Router history={this.props.history}>
-        <Route path="/" component={Base} onEnter={this.requireAuth}>
-          <Route path="dashboard" component={Dashboard} onEnter={this.requireAuth} />
-          <Route path="plants" >
-            <IndexRoute component={Plants} onEnter={this.requireAuth} />
-            <Route path=":id" component={Plant} onEnter={this.requireAuth} />
-          </Route>
-          <Route path="places" >
-            <IndexRoute component={Places} onEnter={this.requireAuth} />
-            <Route path=":id" component={Place} onEnter={this.requireAuth} />
-          </Route>
-          <Route path="login" component={Login} onEnter={this.onLoginPage} />
-        </Route>
-      </Router>
-    );
+    return this.props.authReady === null || this.props.authReady ? (
+      <Routes
+        requireAuth={this.requireAuth}
+        onLoginPage={this.onLoginPage}
+        history={this.props.history} />
+    ) : null;
   }
 }
 
@@ -72,4 +56,4 @@ App.contextTypes = {
   store: React.PropTypes.object.isRequired,
 };
 
-export default App;
+export default connect(state => ({ authReady: selectAuthReady(state) }))(App);

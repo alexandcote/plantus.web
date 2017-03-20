@@ -40,6 +40,11 @@ class PlantusAPI {
     return http.fetch('/users/')
       .then(response => humps.camelizeKeys(response.results));
   }
+
+  static getPlantTypes() {
+    return http.fetch('/plants/')
+      .then(response => humps.camelizeKeys(response.results));
+  }
 }
 
 export default PlantusAPI;

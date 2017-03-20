@@ -4,15 +4,19 @@ import { connect } from 'react-redux';
 import { FormGroup, Button, ControlLabel, FormControl } from 'react-bootstrap';
 import update from 'immutability-helper';
 import { placesRequest } from '../../actions/places';
-import { selectPlaces } from '../../selectors';
+import { plantTypeRequest } from '../../actions/plant-type';
+import { selectPlaces, selectPlantTypes } from '../../selectors';
 import type Plant from '../../types/plant';
+import type PlantType from '../../types/plant-type';
 import type Place from '../../types/place';
 
 type Props = {
   plant?: Plant,
   places: [Place],
+  plantTypes: [PlantType],
   onSubmit: (plant: Plant) => void,
   placesRequest: () => void,
+  plantTypeRequest: () => void,
 };
 
 type State = {
@@ -25,7 +29,7 @@ class PlantForm extends React.Component {
     super(props);
 
     this.state = {
-      plant: this.props.plant ? this.props.plant : { name: '', plant: 1 },
+      plant: this.props.plant ? this.props.plant : { name: '', identifier: '' },
     };
 
     const self: any = this;
@@ -36,12 +40,16 @@ class PlantForm extends React.Component {
 
   componentDidMount() {
     this.props.placesRequest();
+    this.props.plantTypeRequest();
   }
 
   handleSubmit(event: Event) {
     let plant = this.state.plant;
     if (!plant.place) {
       plant = update(plant, { place: { $set: this.props.places[0].id } });
+    }
+    if (!plant.plant) {
+      plant = update(plant, { plant: { $set: this.props.plantTypes[0].id } });
     }
     this.props.onSubmit(plant);
     event.preventDefault();
@@ -64,6 +72,31 @@ class PlantForm extends React.Component {
             }} />
         </FormGroup>
         <FormGroup>
+          <ControlLabel>Identifier</ControlLabel>
+          <FormControl
+            value={this.state.plant.identifier} id="identifier" name="identifier" type="text" placeholder="Identifier"
+            onChange={(event) => {
+              this.setState(
+                update(this.state, { plant: { identifier: { $set: event.target.value } } }),
+              );
+            }} />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Plant type</ControlLabel>
+          <FormControl
+            id="plant" name="plant" componentClass="select"
+            onChange={(event) => {
+              this.setState(
+                update(this.state, { plant: { plant: { $set: event.target.value } } }),
+              );
+            }}
+          >
+            {this.props.plantTypes.map(plantType => (
+              <option key={plantType.id} value={plantType.id}>{plantType.name}</option>
+            ))}
+          </FormControl>
+        </FormGroup>
+        <FormGroup>
           <ControlLabel>Place</ControlLabel>
           <FormControl
             id="place" name="place" componentClass="select"
@@ -84,4 +117,7 @@ class PlantForm extends React.Component {
   }
 }
 
-export default connect(state => ({ places: selectPlaces(state) }), { placesRequest })(PlantForm);
+export default connect(
+  state => ({ places: selectPlaces(state), plantTypes: selectPlantTypes(state) }),
+  { placesRequest, plantTypeRequest },
+)(PlantForm);

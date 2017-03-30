@@ -66,7 +66,7 @@ class Plants extends React.Component {
       return null;
     }
     const modal = this.props.show ? (
-      <FormModal show={this.props.show} title="Add Place" onClose={this.hideAdd}>
+      <FormModal show={this.props.show} title="Add Plant" onClose={this.hideAdd}>
         <PlantForm onSubmit={this.onSubmitNew} />
       </FormModal>
     ) : null;

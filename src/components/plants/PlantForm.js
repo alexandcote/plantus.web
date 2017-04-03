@@ -29,7 +29,7 @@ class PlantForm extends React.Component {
     super(props);
 
     this.state = {
-      plant: this.props.plant ? this.props.plant : { name: '', identifier: '' },
+      plant: this.props.plant ? this.props.plant : { name: '', identifier: '', picture: null },
     };
 
     const self: any = this;
@@ -51,7 +51,11 @@ class PlantForm extends React.Component {
     if (!plant.plant) {
       plant = update(plant, { plant: { $set: this.props.plantTypes[0].id } });
     }
-    this.props.onSubmit(plant);
+    const formData = new FormData();
+    for (const key in plant) {
+      formData.append(key, plant[key]);
+    }
+    this.props.onSubmit(formData);
     event.preventDefault();
   }
 
@@ -68,6 +72,16 @@ class PlantForm extends React.Component {
             onChange={(event) => {
               this.setState(
                 update(this.state, { plant: { name: { $set: event.target.value } } }),
+              );
+            }} />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Image</ControlLabel>
+          <FormControl
+            id="picture" name="picture" type="file"
+            onChange={(event) => {
+              this.setState(
+                update(this.state, { plant: { picture: { $set: event.target.files[0] } } }),
               );
             }} />
         </FormGroup>

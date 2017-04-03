@@ -20,7 +20,12 @@ class PlantusHTTP {
 
     const headers = {};
     headers.Accept = 'application/json';
-    headers['Content-Type'] = 'application/json';
+    if (data instanceof FormData) {
+      headers['Content-Type'] = 'multipart/form-data';
+    } else {
+      headers['Content-Type'] = 'application/json';
+    }
+
     if (auth) {
       headers.Authorization = `JWT ${this.token}`;
     }

@@ -20,7 +20,7 @@ class PlantusAPI {
   }
 
   static newPlant(plant: Plant) {
-    return http.fetch('/pots/', 'POST', true, humps.decamelizeKeys(plant));
+    return http.fetch('/pots/', 'POST', true, plant);
   }
 
   static getPlaces() {
@@ -33,7 +33,7 @@ class PlantusAPI {
   }
 
   static newPlace(place: Place) {
-    return http.fetch('/places/', 'POST', true, humps.decamelizeKeys(place));
+    return http.fetch('/places/', 'POST', true, place);
   }
 
   static getUsers() {

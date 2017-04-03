@@ -25,7 +25,7 @@ class PlaceForm extends React.Component {
     super(props);
 
     this.state = {
-      place: this.props.place ? this.props.place : { name: '', identifier: '', users: [] },
+      place: this.props.place ? this.props.place : { name: '', identifier: '', users: [], picture: null },
     };
 
     const self: any = this;
@@ -39,7 +39,14 @@ class PlaceForm extends React.Component {
   }
 
   handleSubmit(event: Event) {
-    this.props.onSubmit(this.state.place);
+    const formData = new FormData();
+    for (const key in this.state.place) {
+      if (key !== 'users') {
+        formData.append(key, this.state.place[key]);
+      }
+    }
+    this.state.place.users.forEach(user => formData.append('users', user));
+    this.props.onSubmit(formData);
     event.preventDefault();
   }
 
@@ -56,6 +63,16 @@ class PlaceForm extends React.Component {
             onChange={(event) => {
               this.setState(
                 update(this.state, { place: { name: { $set: event.target.value } } }),
+              );
+            }} />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Image</ControlLabel>
+          <FormControl
+            id="picture" name="picture" type="file"
+            onChange={(event) => {
+              this.setState(
+                update(this.state, { place: { picture: { $set: event.target.files[0] } } }),
               );
             }} />
         </FormGroup>

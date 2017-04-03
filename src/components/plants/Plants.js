@@ -22,7 +22,7 @@ type Props = {
 const plantCard = plant => (
   <Card
     key={plant.id}
-    img="http://www.ikea.com/gb/en/images/range-introduction/ikea-plant-and-pot__1364310122805-s4.jpg"
+    img={plant.picture}
     alt={plant.name}
     title={plant.name}
     link={PlantRoute(plant.id)}

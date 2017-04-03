@@ -21,7 +21,7 @@ type Props = {
 const placeCard = place => (
   <Card
     key={place.id}
-    img="http://pinandpin.com/wp-content/uploads/2013/11/395_2CL_2175_VILLA_IVY_x-1200x798.jpg"
+    img={place.picture}
     alt={place.name}
     title={place.name}
     link={PlaceRoute(place.id)} />

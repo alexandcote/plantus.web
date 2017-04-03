@@ -20,6 +20,9 @@ module.exports = {
         target: 'http://localhost:8000',
         pathRewrite: { '^/api': '' }, // Path where the api is mounted
       },
+      '/media': {
+        target: 'http://localhost:8000',
+      },
     },
   },
   module: {

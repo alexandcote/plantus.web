@@ -1,34 +1,60 @@
 // @flow
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
+import { connect } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
+import _ from 'lodash';
+import StatsLineChart from '../common/StatsLineChart';
+import { selectTimeseries } from '../../selectors';
+import { timeseriesRequest } from '../../actions/timeseries';
+import type Timeseries from '../../types/timeseries';
+
+const lineKeys = [
+  'humidity',
+  'temperature',
+  'luminosity',
+  'waterLevel',
+];
+
+type Props = {
+  timeseriesRequest: () => void,
+  timeseries: [Timeseries],
+}
 
 class Dashboard extends React.Component {
+
+  componentDidMount() {
+    this.props.timeseriesRequest();
+  }
+
+  props: Props
 
   render() {
     if (!this.props) {
       return null;
     }
-    const data = [
-      { name: '1', temp: 24 },
-      { name: '2', temp: 23 },
-      { name: '3', temp: 18 },
-      { name: '4', temp: 19 },
-      { name: '5', temp: 18 },
-      { name: '6', temp: 18 },
-      { name: '7', temp: 23 },
-    ];
+    const stats = _.groupBy(this.props.timeseries, time => time.pot);
+    const graphs = [];
+    for (const key in stats) {
+      const graph = (
+        <Col key={key} md={6}>
+          <StatsLineChart key={key} title={key} data={stats[key]} xDataKey="date" lineDataKeys={lineKeys} />
+        </Col>
+      );
+      graphs.push(graph);
+    }
     return (
-      <LineChart
-        width={600} height={300} data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <XAxis dataKey="name" />
-        <YAxis domain={['dataMin - 1', 'dataMax + 1']} />
-        <Tooltip />
-        <Line type="monotone" dataKey="temp" stroke="#8884d8" activeDot={{ r: 8 }} />
-      </LineChart>
+      <Row>
+        {graphs}
+      </Row>
     );
   }
 }
 
-export default Dashboard;
+export default connect(
+  state => ({
+    timeseries: selectTimeseries(state),
+  }),
+  {
+    timeseriesRequest,
+  },
+)(Dashboard);

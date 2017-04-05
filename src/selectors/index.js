@@ -12,3 +12,5 @@ export const selectPlantsModalVisibility = state => state.plants.modalVisibility
 export const selectUsers = state => state.users;
 
 export const selectPlantTypes = state => state.plantTypes;
+
+export const selectTimeseries = state => state.timeseries;

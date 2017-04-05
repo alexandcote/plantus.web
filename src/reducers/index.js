@@ -9,6 +9,7 @@ import places from './places';
 import place from './place';
 import users from './users';
 import plantTypes from './plant-types';
+import timeseries from './timeseries';
 import { LOGOUT } from '../actions/auth';
 
 const plantusApp = combineReducers({
@@ -21,6 +22,7 @@ const plantusApp = combineReducers({
   place,
   users,
   plantTypes,
+  timeseries,
 });
 
 export default (state: {routing: {}}, action: Object) => {

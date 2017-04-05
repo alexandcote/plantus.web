@@ -31,6 +31,7 @@
     "immutability-helper": "^2.1.2",
     "inject-loader": "^3.0.0-beta4",
     "localforage": "^1.5.0",
+    "lodash": "^4.17.4",
     "node-sass": "^4.3.0",
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.7",

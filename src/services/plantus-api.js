@@ -45,6 +45,11 @@ class PlantusAPI {
     return http.fetch('/plants/')
       .then(response => humps.camelizeKeys(response.results));
   }
+
+  static getTimeseries() {
+    return http.fetch('/timeseries/')
+      .then(response => humps.camelizeKeys(response.results));
+  }
 }
 
 export default PlantusAPI;

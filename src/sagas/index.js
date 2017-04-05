@@ -8,6 +8,7 @@ import placesSaga from './places';
 import placeSaga from './place';
 import usersSaga from './users';
 import plantTypeSaga from './plantTypes';
+import timeseriesSaga from './timeseries';
 
 export default function* root(): any {
   yield [
@@ -19,5 +20,6 @@ export default function* root(): any {
     fork(placeSaga),
     fork(usersSaga),
     fork(plantTypeSaga),
+    fork(timeseriesSaga),
   ];
 }

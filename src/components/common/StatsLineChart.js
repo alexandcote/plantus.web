@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 type Props = {
   data: [{}],
@@ -27,15 +27,14 @@ class StatsLineChart extends React.Component {
     return (
       <div>
         <h1>{this.props.title}</h1>
-        <LineChart
-          width={600} height={300} data={this.props.data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <XAxis dataKey={this.props.xDataKey} />
-          <YAxis domain={['dataMin - 1', 'dataMax + 1']} />
-          <Tooltip />
-          {this.props.lineDataKeys.map(key => <Line key={key} type="monotone" dataKey={key} stroke="#8884d8" activeDot={{ r: 8 }} />)}
-        </LineChart>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={this.props.data}>
+            <XAxis dataKey={this.props.xDataKey} />
+            <YAxis domain={['dataMin - 1', 'dataMax + 1']} />
+            <Tooltip />
+            {this.props.lineDataKeys.map(key => <Line key={key} type="monotone" dataKey={key} stroke="#8884d8" activeDot={{ r: 8 }} />)}
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     );
   }

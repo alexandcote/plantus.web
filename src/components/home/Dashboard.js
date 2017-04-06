@@ -32,14 +32,16 @@ class Dashboard extends React.Component {
     if (!this.props) {
       return null;
     }
-    const stats = _.groupBy(this.props.timeseries, time => time.pot);
+    const stats = _.groupBy(this.props.timeseries, time => time.pot.name);
     const graphs = [];
+    let i = 0;
     for (const key in stats) {
       const graph = (
-        <Col key={key} md={6}>
-          <StatsLineChart key={key} title={key} data={stats[key]} xDataKey="date" lineDataKeys={lineKeys} />
+        <Col key={key} md={12}>
+          <StatsLineChart key={i} title={key} data={stats[key]} xDataKey="date" lineDataKeys={lineKeys} />
         </Col>
       );
+      ++i;
       graphs.push(graph);
     }
     return (

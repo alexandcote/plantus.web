@@ -26,7 +26,7 @@ export default (props: Props) => {
     <Row>
       <Col xs={6}>Humidity: <br />{props.spec.humidity}%</Col>
       <Col xs={6}>Luminosity: <br />{props.spec.luminosity}%</Col>
-      <Col xs={6}>Temperature: <br />{props.spec.temperature}C</Col>
+      <Col xs={6}>Temperature: <br />{props.spec.temperature}°C</Col>
       <Col xs={6}>Water level: <br />{props.spec.waterLevel}%</Col>
     </Row>
   );

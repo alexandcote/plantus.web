@@ -50,6 +50,11 @@ class PlantusAPI {
     return http.fetch('/timeseries/')
       .then(response => humps.camelizeKeys(response.results));
   }
+
+  static newOperation(id: string) {
+    return http.fetch('/operations/', 'POST', true, { pot: id, action: 'water' })
+      .then(response => humps.camelizeKeys(response.results));
+  }
 }
 
 export default PlantusAPI;

@@ -9,6 +9,13 @@ type Props = {
   title: string,
 }
 
+const colors = {
+  humidity: 'blue',
+  luminosity: 'purple',
+  temperature: 'red',
+  waterLevel: 'green',
+};
+
 class StatsLineChart extends React.Component {
 
   props: Props
@@ -20,7 +27,10 @@ class StatsLineChart extends React.Component {
     this.props.data.map((stat) => {
       this.props.lineDataKeys.forEach((key) => {
         stat[key] = +stat[key];
-        stat[this.props.xDataKey] = new Date(stat[this.props.xDataKey]).toDateString();
+        const date = new Date(stat[this.props.xDataKey]);
+        if (!isNaN(date.getTime())) {
+          stat[this.props.xDataKey] = date.toTimeString().replace(/G.*/g, '');
+        }
       });
       return stat;
     });
@@ -32,7 +42,7 @@ class StatsLineChart extends React.Component {
             <XAxis dataKey={this.props.xDataKey} />
             <YAxis domain={['dataMin - 1', 'dataMax + 1']} />
             <Tooltip />
-            {this.props.lineDataKeys.map(key => <Line key={key} type="monotone" dataKey={key} stroke="#8884d8" activeDot={{ r: 8 }} />)}
+            {this.props.lineDataKeys.map(key => <Line key={key} type="monotone" dataKey={key} stroke={colors[key]} activeDot={{ r: 8 }} />)}
           </LineChart>
         </ResponsiveContainer>
       </div>

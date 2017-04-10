@@ -36,10 +36,17 @@ class Dashboard extends React.Component {
     const graphs = [];
     let i = 0;
     for (const key in stats) {
+      const orderStats = _.orderBy(stats[key], 'date');
       const graph = (
-        <Col key={key} md={12}>
-          <StatsLineChart key={i} title={key} data={stats[key]} xDataKey="date" lineDataKeys={lineKeys} />
-        </Col>
+        <div key={key}>
+          <h1 key={`h1-${key}`}>{key}</h1>
+          <Col key={`col-${key}`} md={12}>
+            <StatsLineChart key={`hum-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[0]]} />
+            <StatsLineChart key={`temp-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[1]]} />
+            <StatsLineChart key={`lum-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[2]]} />
+            {/* <StatsLineChart key={`wat-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[3]]} />*/}
+          </Col>
+        </div>
       );
       ++i;
       graphs.push(graph);

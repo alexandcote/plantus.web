@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import _ from 'lodash';
 
 type Props = {
   data: [{}],
@@ -36,7 +37,7 @@ class StatsLineChart extends React.Component {
     });
     return (
       <div>
-        <h1>{this.props.title}</h1>
+        <h2>{_.capitalize(this.props.lineDataKeys[0])}</h2>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={this.props.data}>
             <XAxis dataKey={this.props.xDataKey} />

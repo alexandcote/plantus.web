@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import _ from 'lodash';
@@ -18,15 +19,35 @@ const lineKeys = [
 type Props = {
   timeseriesRequest: () => void,
   timeseries: [Timeseries],
+  router: {
+    setRouteLeaveHook: (route: string, callback: (nextLocation: string) => void) => void,
+  },
+  route: string,
 }
 
 class Dashboard extends React.Component {
 
+  constructor(props: Props) {
+    super(props);
+    this.interval = null;
+    const self: any = this;
+    self.routerWillLeave = this.routerWillLeave.bind(this);
+  }
+
   componentDidMount() {
+    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
     this.props.timeseriesRequest();
+    this.interval = setInterval(() => {
+      this.props.timeseriesRequest();
+    }, 5000);
   }
 
   props: Props
+  interval: ?number
+
+  routerWillLeave() {
+    clearTimeout(this.interval);
+  }
 
   render() {
     if (!this.props) {
@@ -59,11 +80,11 @@ class Dashboard extends React.Component {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   state => ({
     timeseries: selectTimeseries(state),
   }),
   {
     timeseriesRequest,
   },
-)(Dashboard);
+)(Dashboard));

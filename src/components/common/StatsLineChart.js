@@ -21,6 +21,18 @@ class StatsLineChart extends React.Component {
 
   props: Props
 
+  statsLine(key) {
+    return (
+      <Line
+        key={key}
+        type="monotone"
+        dataKey={key}
+        stroke={colors[key]}
+        activeDot={{ r: 8 }}
+        isAnimationActive={false} />
+    );
+  }
+
   render() {
     if (!this.props) {
       return null;
@@ -43,7 +55,7 @@ class StatsLineChart extends React.Component {
             <XAxis dataKey={this.props.xDataKey} />
             <YAxis domain={['dataMin - 1', 'dataMax + 1']} />
             <Tooltip />
-            {this.props.lineDataKeys.map(key => <Line key={key} type="monotone" dataKey={key} stroke={colors[key]} activeDot={{ r: 8 }} />)}
+            {this.props.lineDataKeys.map(this.statsLine)}
           </LineChart>
         </ResponsiveContainer>
       </div>

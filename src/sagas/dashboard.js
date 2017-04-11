@@ -6,7 +6,9 @@ import * as TimeseriesActions from '../actions/timeseries';
 function* dashboardSaga(): * {
   while (true) {
     const { id } = yield take(DashboardActions.CHANGE_SELECTED_PLANT);
-    yield put(TimeseriesActions.timeseriesRequest(id));
+    if (id) {
+      yield put(TimeseriesActions.timeseriesRequest(id));
+    }
   }
 }
 

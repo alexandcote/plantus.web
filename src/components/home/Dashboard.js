@@ -12,7 +12,7 @@ import type Plant from '../../types/plant';
 
 type Props = {
   currentPlant: number,
-  changeSelectedPlant: (id: number) => void,
+  changeSelectedPlant: (id: ?number) => void,
   plantsRequest: () => void,
   timeseriesRequest: (id: number) => void,
   router: {
@@ -45,6 +45,9 @@ class Dashboard extends React.Component {
   handleChange(event) {
     if (event.target.value !== '') {
       this.props.changeSelectedPlant(event.target.value);
+    } else {
+      if (this.interval) clearInterval(this.interval);
+      this.props.changeSelectedPlant(null);
     }
   }
 
@@ -68,7 +71,13 @@ class Dashboard extends React.Component {
     return (
       <div>
         <ControlLabel>Plant</ControlLabel>
-        <FormControl value={this.props.currentPlant || ''} componentClass="select" placeholder="select" onChange={this.handleChange}>
+        <FormControl
+          value={this.props.currentPlant || ''}
+          componentClass="select"
+          onChange={this.handleChange}
+          placeholder="select"
+        >
+          <option value="">Select plant</option>
           {options}
         </FormControl>
         {this.props.currentPlant && <Graph />}

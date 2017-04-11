@@ -34,6 +34,9 @@ class Dashboard extends React.Component {
   componentDidMount() {
     this.props.plantsRequest();
     this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
+    if (this.props.currentPlant) {
+      this.props.timeseriesRequest(this.props.currentPlant);
+    }
   }
 
   props: Props
@@ -66,7 +69,7 @@ class Dashboard extends React.Component {
         <FormControl value={this.props.currentPlant || ''} componentClass="select" placeholder="select" onChange={this.handleChange}>
           {options}
         </FormControl>
-        <Graph />
+        {this.props.currentPlant && <Graph />}
       </div>
     );
   }

@@ -14,3 +14,5 @@ export const selectUsers = state => state.users;
 export const selectPlantTypes = state => state.plantTypes;
 
 export const selectTimeseries = state => state.timeseries;
+
+export const selectDashboardSelectedPlant = state => state.dashboard.selectedPlant;

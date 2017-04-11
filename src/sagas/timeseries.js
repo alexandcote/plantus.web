@@ -5,9 +5,9 @@ import * as TimeseriesActions from '../actions/timeseries';
 
 function* timeseriesSaga(): * {
   while (true) {
-    yield take(TimeseriesActions.TIME_SERIES_REQUEST);
+    const { id } = yield take(TimeseriesActions.TIME_SERIES_REQUEST);
     try {
-      const timeseries = yield call(api.getTimeseries);
+      const timeseries = yield call(api.getTimeseries, id);
       yield put(TimeseriesActions.timeseriesSuccess(timeseries));
     } catch (error) {
       yield put(TimeseriesActions.timeseriesError(error));

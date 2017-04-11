@@ -7,7 +7,6 @@ type Props = {
   data: [{}],
   xDataKey: string,
   lineDataKeys: [string],
-  title: string,
 }
 
 const colors = {

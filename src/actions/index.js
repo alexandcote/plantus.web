@@ -5,6 +5,7 @@ import * as placesActions from './places';
 import * as usersActions from './users';
 import * as plantTypeActions from './plant-type';
 import * as operationActions from './operation';
+import * as dashboardActions from './dashboard';
 
 export {
   authActions,
@@ -13,4 +14,5 @@ export {
   usersActions,
   plantTypeActions,
   operationActions,
+  dashboardActions,
 };

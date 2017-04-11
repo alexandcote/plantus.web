@@ -46,8 +46,8 @@ class PlantusAPI {
       .then(response => humps.camelizeKeys(response.results));
   }
 
-  static getTimeseries() {
-    return http.fetch('/timeseries/', 'GET', true, null, { ordering: '-date', pot: 1 })
+  static getTimeseries(id: number) {
+    return http.fetch('/timeseries/', 'GET', true, null, { ordering: '-date', pot: id })
       .then(response => humps.camelizeKeys(response.results));
   }
 

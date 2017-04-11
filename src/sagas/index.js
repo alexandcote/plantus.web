@@ -10,6 +10,7 @@ import usersSaga from './users';
 import plantTypeSaga from './plantTypes';
 import timeseriesSaga from './timeseries';
 import operationSaga from './operation';
+import dashboardSaga from './dashboard';
 
 export default function* root(): any {
   yield [
@@ -23,5 +24,6 @@ export default function* root(): any {
     fork(plantTypeSaga),
     fork(timeseriesSaga),
     fork(operationSaga),
+    fork(dashboardSaga),
   ];
 }

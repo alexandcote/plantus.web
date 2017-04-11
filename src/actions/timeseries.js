@@ -5,8 +5,9 @@ export const TIME_SERIES_REQUEST = 'TIME_SERIES_REQUEST';
 export const TIME_SERIES_SUCCESS = 'TIME_SERIES_SUCCESS';
 export const TIME_SERIES_ERROR = 'TIME_SERIES_ERROR';
 
-export const timeseriesRequest = () => ({
+export const timeseriesRequest = (id: number) => ({
   type: TIME_SERIES_REQUEST,
+  id,
 });
 
 export const timeseriesSuccess = (timeseries: [Timeseries]) => ({

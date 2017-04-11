@@ -2,27 +2,24 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
-import _ from 'lodash';
-import StatsLineChart from '../common/StatsLineChart';
-import { selectTimeseries } from '../../selectors';
+import { FormControl, ControlLabel } from 'react-bootstrap';
+import { selectPlants, selectDashboardSelectedPlant } from '../../selectors';
+import { changeSelectedPlant } from '../../actions/dashboard';
+import { plantsRequest } from '../../actions/plants';
 import { timeseriesRequest } from '../../actions/timeseries';
-import type Timeseries from '../../types/timeseries';
-
-const lineKeys = [
-  'humidity',
-  'temperature',
-  'luminosity',
-  'waterLevel',
-];
+import Graph from './Graph';
+import type Plant from '../../types/plant';
 
 type Props = {
-  timeseriesRequest: () => void,
-  timeseries: [Timeseries],
+  currentPlant: number,
+  changeSelectedPlant: (id: number) => void,
+  plantsRequest: () => void,
+  timeseriesRequest: (id: number) => void,
   router: {
     setRouteLeaveHook: (route: string, callback: (nextLocation: string) => void) => void,
   },
   route: string,
+  plants: [Plant],
 }
 
 class Dashboard extends React.Component {
@@ -31,19 +28,22 @@ class Dashboard extends React.Component {
     super(props);
     this.interval = null;
     const self: any = this;
-    self.routerWillLeave = this.routerWillLeave.bind(this);
+    self.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
+    this.props.plantsRequest();
     this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
-    this.props.timeseriesRequest();
-    this.interval = setInterval(() => {
-      this.props.timeseriesRequest();
-    }, 5000);
   }
 
   props: Props
   interval: ?number
+
+  handleChange(event) {
+    if (event.target.value !== '') {
+      this.props.changeSelectedPlant(event.target.value);
+    }
+  }
 
   routerWillLeave() {
     clearTimeout(this.interval);
@@ -53,38 +53,33 @@ class Dashboard extends React.Component {
     if (!this.props) {
       return null;
     }
-    const stats = _.groupBy(this.props.timeseries, time => time.pot.name);
-    const graphs = [];
-    let i = 0;
-    for (const key in stats) {
-      const orderStats = _.orderBy(stats[key], 'date');
-      const graph = (
-        <div key={key}>
-          <h1 key={`h1-${key}`}>{key}</h1>
-          <Col key={`col-${key}`} md={12}>
-            <StatsLineChart key={`hum-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[0]]} />
-            <StatsLineChart key={`temp-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[1]]} />
-            <StatsLineChart key={`lum-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[2]]} />
-            {/* <StatsLineChart key={`wat-${i}`} title={key} data={orderStats} xDataKey="date" lineDataKeys={[lineKeys[3]]} />*/}
-          </Col>
-        </div>
-      );
-      ++i;
-      graphs.push(graph);
+
+    if (this.props.currentPlant) {
+      if (this.interval) clearTimeout(this.interval);
+      this.interval = setInterval(() => this.props.timeseriesRequest(this.props.currentPlant), 5000);
     }
+
+    const options = this.props.plants.map(plant => <option key={plant.id} value={plant.id}>{plant.name}</option>);
     return (
-      <Row>
-        {graphs}
-      </Row>
+      <div>
+        <ControlLabel>Plant</ControlLabel>
+        <FormControl value={this.props.currentPlant || ''} componentClass="select" placeholder="select" onChange={this.handleChange}>
+          {options}
+        </FormControl>
+        <Graph />
+      </div>
     );
   }
 }
 
 export default withRouter(connect(
   state => ({
-    timeseries: selectTimeseries(state),
+    plants: selectPlants(state),
+    currentPlant: selectDashboardSelectedPlant(state),
   }),
   {
     timeseriesRequest,
+    plantsRequest,
+    changeSelectedPlant,
   },
 )(Dashboard));

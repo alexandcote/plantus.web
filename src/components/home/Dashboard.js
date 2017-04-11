@@ -33,7 +33,7 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     this.props.plantsRequest();
-    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
+    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave.bind(this));
     if (this.props.currentPlant) {
       this.props.timeseriesRequest(this.props.currentPlant);
     }
@@ -49,7 +49,9 @@ class Dashboard extends React.Component {
   }
 
   routerWillLeave() {
-    clearTimeout(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   render() {
@@ -58,7 +60,7 @@ class Dashboard extends React.Component {
     }
 
     if (this.props.currentPlant) {
-      if (this.interval) clearTimeout(this.interval);
+      if (this.interval) clearInterval(this.interval);
       this.interval = setInterval(() => this.props.timeseriesRequest(this.props.currentPlant), 5000);
     }
 
